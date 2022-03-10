@@ -18,13 +18,12 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/store";
-import { defineComponent } from "vue";
-
-import { TipoNotificacao } from "@/interfaces/INotificacao";
-
 import useNotificador from "@/hooks/notificador";
+import { TipoNotificacao } from "@/interfaces/INotificacao";
+import { useStore } from "@/store";
 import { ALTERAR_PROJETO, CADASTRAR_PROJETO } from "@/store/tipo-acoes";
+import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "Formulario",
@@ -33,35 +32,21 @@ export default defineComponent({
       type: String,
     },
   },
-  mounted() {
+  /*   mounted() {
     if (this.id) {
       const projeto = this.store.state.projeto.projetos.find(
         (proj) => proj.id == this.id
       );
       this.nomeDoProjeto = projeto?.nome || "";
     }
-  },
-  data() {
+  }, */
+  /*   data() {
     return {
       nomeDoProjeto: "",
     };
-  },
+  }, */
   methods: {
-    salvar() {
-      if (this.id) {
-        this.store
-          .dispatch(ALTERAR_PROJETO, {
-            id: this.id,
-            nome: this.nomeDoProjeto,
-          })
-          .then(() => this.lidarComSucesso());
-      } else {
-        this.store
-          .dispatch(CADASTRAR_PROJETO, this.nomeDoProjeto)
-          .then(() => this.lidarComSucesso());
-      }
-    },
-    lidarComSucesso() {
+    /*  lidarComSucesso() {
       this.nomeDoProjeto = "";
       this.notificar(
         TipoNotificacao.SUCESSO,
@@ -69,14 +54,56 @@ export default defineComponent({
         "O projeto foi cadastrado com sucesso!"
       );
       this.$router.push("/projetos");
-    },
+    }, */
   },
-  setup() {
+  /* Para receber props no CompositionAPI tem q passar props dentro do setup(props) */
+  /* Para mexer com variaves reativa deve importa o ref */
+  /* Para a variavel reativa receber algo tem q colocar o .value */
+  /* Dentro do setup nao tem acesso ao this */
+  /* UserRouter = da acesso ao roteador || VueRouter do vue */
+  /* UserRoute = para ter acesso a rota atual,pegar os paramentros */
+  setup(props) {
+    const router = useRouter();
     const store = useStore();
     const { notificar } = useNotificador();
+
+    const nomeDoProjeto = ref("");
+
+    if (props.id) {
+      const projeto = store.state.projeto.projetos.find(
+        (proj) => proj.id == props.id
+      );
+      nomeDoProjeto.value = projeto?.nome || "";
+    }
+    const salvar = () => {
+      if (props.id) {
+        store
+          .dispatch(ALTERAR_PROJETO, {
+            id: props.id,
+            nome: nomeDoProjeto.value,
+          })
+          .then(() => lidarComSucesso());
+      } else {
+        store
+          .dispatch(CADASTRAR_PROJETO, nomeDoProjeto.value)
+          .then(() => lidarComSucesso());
+      }
+    };
+    const lidarComSucesso = () => {
+      nomeDoProjeto.value = "";
+      notificar(
+        TipoNotificacao.SUCESSO,
+        "Excelente!",
+        "O projeto foi cadastrado com sucesso!"
+      );
+      router.push("/projetos");
+    };
+    /* Retorna as funções ou variaveis que seram usadas fora do setup */
     return {
-      store,
-      notificar,
+      salvar,
+      /*  store,
+      notificar, */
+      nomeDoProjeto,
     };
   },
 });
