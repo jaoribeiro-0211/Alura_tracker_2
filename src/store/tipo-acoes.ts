@@ -7,3 +7,4 @@ export const REMOVER_PROJETO = 'REMOVER_PROJETO'
 /* Tipo de ações Tarefa */
 export const OBTER_TAREFAS = 'OBTER_TAREFAS'
 export const CADASTRAR_TAREFA = 'CADASTRAR_TAREFA'
+export const ALTERAR_TAREFA = 'ALTERAR_TAREFA'

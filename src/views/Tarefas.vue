@@ -35,7 +35,9 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success">Salvar alterações</button>
+          <button class="button is-success" @click="alterarTarefa">
+            Salvar alterações
+          </button>
           <button class="button" @click="tarefaSelecionada = null">
             Cancelar
           </button>
@@ -51,6 +53,7 @@ import Formulario from "../components/Formulario.vue";
 import Tarefa from "../components/Tarefa.vue";
 import Box from "../components/Box.vue";
 import {
+  ALTERAR_TAREFA,
   CADASTRAR_TAREFA,
   OBTER_PROJETOS,
   OBTER_TAREFAS,
@@ -77,6 +80,11 @@ export default defineComponent({
     },
     selecionarTarefa(tarefa: ITarefa) {
       this.tarefaSelecionada = tarefa;
+    },
+    alterarTarefa() {
+      this.store
+        .dispatch(ALTERAR_TAREFA, this.tarefaSelecionada)
+        .then(() => (this.tarefaSelecionada = null));
     },
   },
   setup() {
