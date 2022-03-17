@@ -33,11 +33,11 @@
       "id": 2
     },
     {
-      "descricao": "dsadsadsadsadas",
-      "duracaoEmSegundos": 1,
+      "descricao": "Estudar Vuex",
+      "duracaoEmSegundos": 2,
       "projeto": {
-        "nome": "ByteBank",
-        "id": 2
+        "nome": "Alura Tracker 3.0",
+        "id": 3
       },
       "id": 3
     }

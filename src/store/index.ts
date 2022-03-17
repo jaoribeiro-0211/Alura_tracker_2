@@ -1,17 +1,16 @@
-import { createStore, Store, useStore as vuexUseStore } from 'vuex'
+import http from '@/http'
+import { INotificacao } from '@/interfaces/INotificacao'
+import ITarefa from '@/interfaces/ITarefa'
 import { InjectionKey } from 'vue'
+import { createStore, Store, useStore as vuexUseStore } from 'vuex'
+import { EstadoProjeto, projeto } from './modulos/projeto'
+import { ALTERAR_TAREFA, CADASTRAR_TAREFA, OBTER_TAREFAS } from './tipo-acoes'
 import {
   ADICIONA_TAREFA,
   ALTERA_TAREFA,
   DEFINIR_TAREFAS,
   NOTIFICAR
 } from './tipo-mutacoes'
-import { INotificacao } from '@/interfaces/INotificacao'
-import { ALTERAR_TAREFA, CADASTRAR_TAREFA, OBTER_TAREFAS } from './tipo-acoes'
-
-import http from '@/http'
-import ITarefa from '@/interfaces/ITarefa'
-import { EstadoProjeto, projeto } from './modulos/projeto'
 
 export interface Estado {
   notificacoes: INotificacao[]
@@ -60,11 +59,10 @@ export const store = createStore<Estado>({
     },
     [CADASTRAR_TAREFA]({ commit }, tarefa: ITarefa) {
       return http
-        .post('/tarefas', {
-          tarefa
-        })
+        .post('/tarefas', tarefa)
         .then(response => commit(ADICIONA_TAREFA, response.data))
     },
+
     [ALTERAR_TAREFA]({ commit }, tarefa: ITarefa) {
       return http
         .put(`/tarefas/${tarefa.id}`, tarefa)
