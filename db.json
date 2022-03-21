@@ -11,6 +11,10 @@
     {
       "id": 4,
       "nome": "Estudando Vuex"
+    },
+    {
+      "id": 5,
+      "nome": "Código Limpo 2022"
     }
   ],
   "tarefas": [
@@ -24,22 +28,31 @@
       }
     },
     {
-      "descricao": "TY",
-      "duracaoEmSegundos": 1,
+      "id": 2,
+      "duracaoEmSegundos": 120,
+      "descricao": "Configuração do ambiente",
       "projeto": {
-        "nome": "ByteBank",
-        "id": 2
-      },
-      "id": 2
+        "id": 3,
+        "nome": "ByteBank"
+      }
     },
     {
-      "descricao": "dsadsadsadsadas",
-      "duracaoEmSegundos": 1,
+      "descricao": "Teste",
+      "duracaoEmSegundos": 2,
       "projeto": {
-        "nome": "ByteBank",
-        "id": 2
+        "id": 5,
+        "nome": "Código Limpo 2022"
       },
       "id": 3
+    },
+    {
+      "descricao": "Estudar",
+      "duracaoEmSegundos": 2,
+      "projeto": {
+        "nome": "Alura Tracker 3.0",
+        "id": 3
+      },
+      "id": 4
     }
   ]
 }
