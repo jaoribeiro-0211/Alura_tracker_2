@@ -65,6 +65,7 @@ export const store = createStore<Estado>({
         .post('/tarefas', tarefa)
         .then(response => commit(ADICIONA_TAREFA, response.data))
     },
+
     [ALTERAR_TAREFA]({ commit }, tarefa: ITarefa) {
       return http
         .put(`/tarefas/${tarefa.id}`, tarefa)
